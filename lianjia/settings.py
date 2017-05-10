@@ -37,11 +37,9 @@ HEADER={
 
 DOWNLOAD_DELAY = 10
 COOKIES_ENABLED = False
-
 ITEM_PIPELINES = {
     'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
-
 '''
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
