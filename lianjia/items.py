@@ -13,6 +13,24 @@ class LianjiaItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+class LianjiaZufangItem(scrapy.Item):
+	url = scrapy.Field()
+	latitude = scrapy.Field()
+	price = scrapy.Field()
+	tag = scrapy.Field()
+	housearea = scrapy.Field()
+	style = scrapy.Field()
+	floor = scrapy.Field()
+	orient = scrapy.Field()
+	trans = scrapy.Field()
+	community = scrapy.Field()
+	area = scrapy.Field()
+	way = scrapy.Field()
+	pay = scrapy.Field()
+	status = scrapy.Field()
+	warm = scrapy.Field()
+	
+
 class LianjiaErshouItem(scrapy.Item):
 	url = scrapy.Field()
 	latitude = scrapy.Field()
