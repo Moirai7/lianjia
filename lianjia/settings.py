@@ -14,6 +14,11 @@ BOT_NAME = 'lianjia'
 SPIDER_MODULES = ['lianjia.spiders']
 NEWSPIDER_MODULE = 'lianjia.spiders'
 
+MYSQL_HOST = '166.111.80.171'
+MYSQL_DBNAME = ''
+MYSQL_USER = ''
+MYSQL_PASSWD = ''
+
 HEADER={
     'Connection':'keep-alive',
     'Upgrade-Insecure-Requests':1,
@@ -30,8 +35,13 @@ HEADER={
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
 }
 
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 10
 COOKIES_ENABLED = False
+
+ITEM_PIPELINES = {
+    'tutorial.pipelines.MySQLStoreCnblogsPipeline':300
+}
+
 '''
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
