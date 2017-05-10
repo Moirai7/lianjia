@@ -16,8 +16,7 @@ class LianjiaPipeline(object):
 class MySQLStoreCnblogsPipeline(object):
 	def __init__(self, dbpool):
 		self.dbpool = dbpool
-		self.tr4w = TextRank4Keyword.TextRank4Keyword(stop_words_file='stopword.txt')
-		self.tr4s = TextRank4Sentence.TextRank4Sentence(stop_words_file='stopword.txt')
+
 	@classmethod
 	def from_settings(cls, settings):
 		dbargs = dict(
