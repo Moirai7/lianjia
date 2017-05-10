@@ -15,9 +15,9 @@ SPIDER_MODULES = ['lianjia.spiders']
 NEWSPIDER_MODULE = 'lianjia.spiders'
 
 MYSQL_HOST = '166.111.80.171'
-MYSQL_DBNAME = 'houseprice'
+MYSQL_DBNAME = 'house'
 MYSQL_USER = 'root'
-MYSQL_PASSWD = ''
+MYSQL_PASSWD = 'houseprice'
 
 HEADER={
     'Connection':'keep-alive',
