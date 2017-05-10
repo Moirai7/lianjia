@@ -6,7 +6,7 @@ from scrapy.spiders import Spider
 from lianjia.items import LianjiaZufangItem
 from scrapy.selector import Selector
 from scrapy.http import Request
-from lxml import etree
+#from lxml import etree
 
 class zufangSpider(Spider):
         name = "zufang"
