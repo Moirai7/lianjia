@@ -39,7 +39,7 @@ DOWNLOAD_DELAY = 10
 COOKIES_ENABLED = False
 
 ITEM_PIPELINES = {
-    'tutorial.pipelines.MySQLStoreCnblogsPipeline':300
+    'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
 
 '''
