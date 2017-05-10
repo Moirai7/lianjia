@@ -7,6 +7,7 @@
 
 import MySQLdb
 import MySQLdb.cursors
+from twisted.enterprise import adbapi
 
 class LianjiaPipeline(object):
 	def process_item(self, item, spider):
