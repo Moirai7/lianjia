@@ -34,11 +34,13 @@ class ershouSpider(Spider):
 	def parse_details(self,response):
 		#response = requests.get(url)
 		#contents = etree.HTML(response.content.decode('utf-8'))
-		contents = etree.HTML(response.body)
-		latitude = contents.xpath('/ html / body / script[19]/text()').pop()
+		#contents = etree.HTML(response.body)
+		#latitude = contents.xpath("/ html / body / script[19]/text()").pop()
 		time.sleep(3)
 		regex = '''resblockPosition(.+)'''
-		items = re.search(regex, latitude)
+		#items = re.search(regex, latitude)
+		items = re.search(regex,response.body)
+		print items
 		content = items.group()[:-1]  
 		longitude_latitude = content.split(':')[1]
 
@@ -49,7 +51,9 @@ class ershouSpider(Spider):
 		res = Selector(response)
 		item['price']=''.join(res.xpath("//div[@class='price ']/span/text()").extract())
 		item['unit_price']=res.xpath("//span[@class='unitPriceValue']/text()").extract()[0]
-		item['taxtext']=res.xpath("//span[@class='taxtext']/@title").extract()[0]
+		#item['taxtext']=res.xpath("//span[@class='taxtext']/@title").extract()
+		item['taxtext']=' '.join(res.xpath("//span[@class='taxtext']/@title").extract())
+		#item['taxtext']=re.findall(r"\d+\.?\d*",''.join(res.xpath("//span[@class='taxtext']/@title").extract()))
 		item['community']=res.xpath("//div[@class='communityName']/a[@class='info']/text()").extract()[0]
 		item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
 		item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
