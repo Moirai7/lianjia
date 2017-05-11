@@ -53,14 +53,14 @@ class MySQLStoreCnblogsPipeline(object):
 				pass
 			else:
 				print 'ershou'
-				sql =  """Insert into `ershou` (`id`,`area`,`backup`,`belong`,`belongs`,`building`,`building_style`,`community`,`elevator`,`exert`,`fixed_year`,`floor`,`house_fixed_year`,`housearea`,`in_area`,`latitude`,`mortgage`,`orient`,`price`,`scale`,`status`,`structure`,`style`,`tag`,`taxtext`,`time`,`trade`,`unit_price`,`url`,`warm`) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+				sql =  """Insert into `ershou` (`id`,`area`,`backup`,`belong`,`belongs`,`building`,`building_style`,`community`,`elevator`,`exert`,`fixed_year`,`floor`,`house_fixed_year`,`housearea`,`in_area`,`latitude`,`mortgage`,`orient`,`price`,`scale`,`status`,`structure`,`style`,`tag`,`taxtext`,`time`,`trade`,`unit_price`,`url`,`warm`) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 				conn.execute(sql, (linkmd5id,item['area'].encode('utf-8'), item['backup'].encode('utf-8'), item['belong'].encode('utf-8'), item['belongs'].encode('utf-8'), item['building'].encode('utf-8'), item['building_style'].encode('utf-8'), item['community'].encode('utf-8'), item['elevator'].encode('utf-8'),item['exert'].encode('utf-8'),item['fixed_year'].encode('utf-8'),item['floor'].encode('utf-8'),item['house_fixed_year'].encode('utf-8'),item['housearea'].encode('utf-8'),item['in_area'].encode('utf-8'),item['latitude'].encode('utf-8'),item['mortgage'].encode('utf-8'),item['orient'].encode('utf-8'),item['price'].encode('utf-8'),item['scale'].encode('utf-8'),item['status'].encode('utf-8'),item['structure'].encode('utf-8'),item['style'].encode('utf-8'),item['tag'].encode('utf-8'),item['taxtext'].encode('utf-8'),item['time'].encode('utf-8'),item['trade'].encode('utf-8'),item['unit_price'].encode('utf-8'),item['url'].encode('utf-8'),item['warm'].encode('utf-8')))
 		else:
-        		conn.execute("""select 1 from `ershou` where id = %s""",linkmd5id)
+        		conn.execute("""select 1 from `zufang` where id = %s""",linkmd5id)
 			ret = conn.fetchone()
 			if ret:
 				pass
 			else:
 				print 'zufang'
-				sql =  """Insert into `zufang` (`id`,`ulr`,`latitude`,`price`,`tag`,`housearea`,`style`,`floor`,`orient`,`trans`,`community`,`area`,`way`,`pay`,`status`,`warm`) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+				sql =  """Insert into `zufang` (`id`,`ulr`,`latitude`,`price`,`tag`,`housearea`,`style`,`floor`,`orient`,`trans`,`community`,`area`,`way`,`pay`,`status`,`warm`) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 				conn.execute(sql,(linkmd5id,item['url'].encode('utf-8'),item['latitude'].encode('utf-8'),item['price'].encode('utf-8'),item['tag'].encode('utf-8'),item['housearea'].encode('utf-8'),item['style'].encode('utf-8'),item['floor'].encode('utf-8'),item['orient'].encode('utf-8'),item['trans'].encode('utf-8'),item['community'].encode('utf-8'),item['area'].encode('utf-8'),item['way'].encode('utf-8'),item['pay'].encode('utf-8'),item['status'].encode('utf-8'),item['warm'].encode('utf-8')))
