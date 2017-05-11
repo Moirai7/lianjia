@@ -47,7 +47,7 @@ class zufangSpider(Spider):
                 item['latitude']=longitude_latitude[1:-1]
 		
 		res = Selector(response)
-                item['price']=''.join(res.xpath("//div[@class='price ']/span[1]/text()").extract()).strip()
+                item['price']=' '.join(res.xpath("//div[@class='price ']/span[1]/text()").extract()).strip()
 		item['tag']=''
 		item['housearea']=res.xpath("//div[@class='zf-room']/p[1]/text()").extract()[0]
 		item['style']=res.xpath("//div[@class='zf-room']/p[2]/text()").extract()[0]
@@ -55,9 +55,9 @@ class zufangSpider(Spider):
 		item['orient']=res.xpath("//div[@class='zf-room']/p[4]/text()").extract()[0]
 		item['trans']=res.xpath("//div[@class='zf-room']/p[5]/text()").extract()[0]
 		item['community']=res.xpath("//div[@class='zf-room']/p[6]/a[1]/text()").extract()[0]
-		item['area']=''.join(res.xpath("//div[@class='zf-room']/p[7]/a/text()").extract())
+		item['area']=' '.join(res.xpath("//div[@class='zf-room']/p[7]/a/text()").extract())
 		item['way']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
-		item['pay']=''.join(res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()).strip()
+		item['pay']=' '.join(res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()).strip()
 		item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
 		item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
 		yield item

@@ -48,14 +48,15 @@ class ershouSpider(Spider):
 		item['latitude']=longitude_latitude[1:-1]
 
 		res = Selector(response)
-		item['price']=''.join(res.xpath("//div[@class='price ']/span/text()").extract())
+		item['price']=' '.join(res.xpath("//div[@class='price ']/span/text()").extract())
 		item['unit_price']=res.xpath("//span[@class='unitPriceValue']/text()").extract()[0]
 		#item['taxtext']=res.xpath("//span[@class='taxtext']/@title").extract()
 		#item['taxtext']=' '.join(res.xpath("//span[@class='taxtext']/@title").extract())
 		#item['taxtext']=re.findall(r"\d+\.?\d*",''.join(res.xpath("//span[@class='taxtext']/@title").extract()))
 		item['taxtext']=''
 		item['community']=res.xpath("//div[@class='communityName']/a[@class='info']/text()").extract()[0]
-		item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
+		#item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
+		item['area']=' '.join(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
 		item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
 		item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
 		item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
@@ -77,7 +78,8 @@ class ershouSpider(Spider):
 		item['belongs']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[6]/text()").extract()[0]
 		item['mortgage']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[7]/span[2]/text()").extract()[0]
 		item['backup']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[8]/text()").extract()[0]
-		item['tag']=json.dumps(res.xpath("//div[@class='tags clear']/div[@class='content']/a/text()").extract())
+		#item['tag']=json.dumps(res.xpath("//div[@class='tags clear']/div[@class='content']/a/text()").extract())
+		item['tag']=" ".join(res.xpath("//div[@class='tags clear']/div[@class='content']/a/text()").extract())
 		yield item
 	
 	'''
