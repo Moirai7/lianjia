@@ -40,7 +40,6 @@ COOKIES_ENABLED = False
 ITEM_PIPELINES = {
     'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
-'''
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
   'Accept-Language': 'zh-CN,zh;q=0.8',
@@ -54,7 +53,6 @@ DOWNLOADER_MIDDLEWARES = {
    'lianjia.proxymiddlewares.ProxyMiddleware':100,
    'scrapy.downloadermiddleware.useragent.UserAgentMiddleware' : None,
 }
-'''
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'lianjia (+http://www.yourdomain.com)'
 
