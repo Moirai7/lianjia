@@ -17,9 +17,14 @@ class ershouSpider(Spider):
 		pass
 
 	def parse(self,response):
+		baned = re.search('captcha',response.body)
+		if baned:
+			response.request.meta["change_proxy"]=True
+			#yield Request(url=,callback=self.parse)
+			pass
 		res = Selector(response)
 		urls = res.xpath("//div[@class='title']/a/@href").extract()
-		for url in urls:
+		for url in urls:	
 			#print url
 			yield Request(url=url, callback=self.parse_details)
 			#self.parse_details(url)
@@ -29,14 +34,19 @@ class ershouSpider(Spider):
 		cur = data['curPage']
 		total = data['totalPage']
 		if cur <= total:
-			yield Request(url='http://bj.lianjia.com/ershoufang/pg'+str(cur+1),callback=self.parse)
+			yield Request(url='http://bj.lianjia.com/ershoufang/pg'+str(cur+1)+'/',callback=self.parse)
 
 	def parse_details(self,response):
 		#response = requests.get(url)
 		#contents = etree.HTML(response.content.decode('utf-8'))
 		#contents = etree.HTML(response.body)
 		#latitude = contents.xpath("/ html / body / script[19]/text()").pop()
-		time.sleep(3)
+		baned = re.search('captcha',response.body)
+                if baned:
+                        response.request.meta["change_proxy"]=True
+                        #yield Request(url=,callback=self.parse)
+                        pass
+		#time.sleep(3)
 		regex = '''resblockPosition(.+)'''
 		#items = re.search(regex, latitude)
 		items = re.search(regex,response.body)

@@ -34,29 +34,40 @@ HEADER={
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
 }
-
-DOWNLOAD_DELAY = 10
+#REDIRECT_ENABLED = False
+#DOWNLOAD_DELAY = 3
 COOKIES_ENABLED = False
 ITEM_PIPELINES = {
     'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
+DOWNLOAD_TIMEOUT = 10
+'''
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 351,
+    'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
+}
+'''
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
   'Accept-Language': 'zh-CN,zh;q=0.8',
-  'Host':'ip84.com',
-  'Referer':'http://ip84.com/',
-  'X-XHR-Referer':'http://ip84.com/'
+  'Host':'zhuhu.com',
+  'Referer':'http://zhuhu.com/',
+  'X-XHR-Referer':'http://zhihu.com/',
+  'Accept-Encoding': 'gzip, deflate',
+  'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4'
 }
-
 DOWNLOADER_MIDDLEWARES = {
-   'lianjia.useragent.UserAgent': 1,
-   'lianjia.proxymiddlewares.ProxyMiddleware':100,
-   'scrapy.downloadermiddleware.useragent.UserAgentMiddleware' : None,
+   #'lianjia.useragent.UserAgent': 1,
+   'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 543,
+   #'lianjia.proxymiddlewares.ProxyMiddleware':125,
+   'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware':None  
 }
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'lianjia (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
+COOKIES_ENABLED = False
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -71,7 +82,6 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False

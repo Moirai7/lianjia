@@ -17,6 +17,11 @@ class zufangSpider(Spider):
                 pass
 
 	def parse(self,response):
+		baned = re.search('captcha',response.body)
+                if baned:
+                        response.request.meta["change_proxy"]=True
+                        #yield Request(url=,callback=self.parse)
+                        pass
                 res = Selector(response)
                 urls = res.xpath("//div[@class='info-panel']/h2/a/@href").extract()
                 for url in urls:
@@ -29,12 +34,17 @@ class zufangSpider(Spider):
                 cur = data['curPage']
                 total = data['totalPage']
                 if cur <= total:
-                        yield Request(url='http://bj.lianjia.com/zufang/pg'+str(cur+1),callback=self.parse)
+                        yield Request(url='http://bj.lianjia.com/zufang/pg'+str(cur+1)+'/',callback=self.parse)
 
 	def parse_details(self,response):
 		#contents = etree.HTML(response.body)
                 #latitude = contents.xpath("/ html / body / script[3]/text()").pop()
-                time.sleep(3)
+		baned = re.search('captcha',response.body)
+                if baned:
+                        response.request.meta["change_proxy"]=True
+                        #yield Request(url=,callback=self.parse)
+                        pass
+                #time.sleep(3)
                 regex = '''resblockPosition(.+)'''
 		
                 #items = re.search(regex, latitude)

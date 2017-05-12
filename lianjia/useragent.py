@@ -18,9 +18,19 @@ class UserAgent(UserAgentMiddleware):
             print "********Current UserAgent:%s************" %ua
             request.headers.setdefault('User-Agent', ua)
 
+    files = open('user-agents.txt','r')
+    user_agent_list=[]
+    while 1:
+        line = files.readline().strip()
+        if not line:
+            break
+        user_agent_list.append(line)
+
     #the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape
     #for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php
+    '''
     user_agent_list = [\
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 "
         "(KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
         "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 "
@@ -58,3 +68,4 @@ class UserAgent(UserAgentMiddleware):
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 "
         "(KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
        ]
+    '''
