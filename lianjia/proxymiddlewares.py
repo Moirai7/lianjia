@@ -4,7 +4,8 @@ import requests
 from threading import Timer
 import json
 import re
-import httpsProxys
+#import httpsProxys
+import fetch_free_proxyes
 class ProxyMiddleware(object):
     handle_httpstatus_list = xrange(300,600)
     #代理IP列表
@@ -47,7 +48,8 @@ class ProxyMiddleware(object):
 	print len(self.proxyList)
 	#self.pro_adr = j[0]['ip']
 	"""
-	self.proxyList = httpsProxys.NEWHTTPS()
+	#self.proxyList = httpsProxys.NEWHTTPS()
+	self.proxyList = fetch_free_proxyes.fetch_all()
 	self.pro_adr = random.choice(self.proxyList)
 	print "USE PROXY -> http://" + self.pro_adr
 	t = Timer(600,self.get_proxy)
@@ -55,7 +57,7 @@ class ProxyMiddleware(object):
 
     def process_response(self,request,response,spider):
 	baned = re.search('captcha',response.url)
-	if baned or response.status in xrange(300,600):
+	if baned:
 		return_request = self.change_proxy(request,'1')
 		if return_request:
                     return return_request
@@ -68,12 +70,16 @@ class ProxyMiddleware(object):
 	#	request.meta["change_proxy"] = False
 	#       if return_request: 
         #    	    return return_request
-	#baned = re.search('captcha',request.url)
-	#if baned:
-	return_request = self.change_proxy(request,'2')
-	#	if return_request:
-        #           return return_request
-	#return request
+	baned = re.search('captcha',request.url)
+	if baned:
+		return_request = self.change_proxy(request,'2')
+		if return_request:
+                   return return_request
+	else:
+		return_request = self.change_proxy(request,'22')
+		if return_request:
+			return return_request
+	return request
 
     def process_exception(self, request, exception, spider):
 	'''
