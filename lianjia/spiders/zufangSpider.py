@@ -17,7 +17,7 @@ class zufangSpider(Spider):
                 pass
 
 	def parse(self,response):
-		baned = re.search('captcha',response.body)
+		baned = re.search('captcha',response.url)
                 if baned:
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)
@@ -39,7 +39,7 @@ class zufangSpider(Spider):
 	def parse_details(self,response):
 		#contents = etree.HTML(response.body)
                 #latitude = contents.xpath("/ html / body / script[3]/text()").pop()
-		baned = re.search('captcha',response.body)
+		baned = re.search('captcha',response.url)
                 if baned:
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)

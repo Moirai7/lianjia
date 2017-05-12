@@ -38,7 +38,8 @@ HEADER={
 DOWNLOAD_DELAY = 3
 COOKIES_ENABLED = False
 ITEM_PIPELINES = {
-    'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
+    'lianjia.pipelines.JsonWriterPipeline':300
+    #'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
 DOWNLOAD_TIMEOUT = 10
 '''

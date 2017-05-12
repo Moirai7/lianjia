@@ -10,10 +10,28 @@ import MySQLdb.cursors
 from twisted.enterprise import adbapi
 from lianjia.items import LianjiaErshouItem
 from hashlib import md5
+import json
 
 class LianjiaPipeline(object):
 	def process_item(self, item, spider):
 		return item
+class JsonWriterPipeline(object):
+	def open_spider(self, spider):
+		self.ershou = open('ershou.json', 'wb')
+		self.zufang = open('zufang.json','wb')
+
+	def close_spider(self, spider):
+		self.ershou.close()
+		self.zufang.close()
+
+	def process_item(self, item, spider):
+		line = json.dumps(dict(item)) + "\n"
+		if type(item) is LianjiaErshouItem:
+			self.ershou.write(line)
+		else:
+			self.zufang.write(line)
+		return item
+
 
 class MySQLStoreCnblogsPipeline(object):
 	def __init__(self, dbpool):

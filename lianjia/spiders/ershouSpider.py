@@ -17,7 +17,7 @@ class ershouSpider(Spider):
 		pass
 
 	def parse(self,response):
-		baned = re.search('captcha',response.body)
+		baned = re.search('captcha',response.url)
 		if baned:
 			response.request.meta["change_proxy"]=True
 			#yield Request(url=,callback=self.parse)
@@ -41,7 +41,7 @@ class ershouSpider(Spider):
 		#contents = etree.HTML(response.content.decode('utf-8'))
 		#contents = etree.HTML(response.body)
 		#latitude = contents.xpath("/ html / body / script[19]/text()").pop()
-		baned = re.search('captcha',response.body)
+		baned = re.search('captcha',response.url)
                 if baned:
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)
