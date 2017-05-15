@@ -5,8 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import MySQLdb
-import MySQLdb.cursors
+#import MySQLdb
+#import MySQLdb.cursors
 from twisted.enterprise import adbapi
 from lianjia.items import LianjiaErshouItem,LianjiaZufangItem
 from hashlib import md5

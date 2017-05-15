@@ -17,12 +17,12 @@ class ershouSpider(Spider):
 
 	def start_requests(self):
 		import os 
-		if os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json'):
+		if os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershou.json'):
 			checked = []
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershou.json','rb') as f:
 				for line in f:
 					checked.append(json.loads(line)['url'])	
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['url']
 					for url in urls:
@@ -32,6 +32,7 @@ class ershouSpider(Spider):
 							print url +' already checked'
 		else:
 			self.start_urls = ['http://bj.lianjia.com/ershoufang/dongcheng/','http://bj.lianjia.com/ershoufang/xicheng/','http://bj.lianjia.com/ershoufang/chaoyang/','http://bj.lianjia.com/ershoufang/haidian/','http://bj.lianjia.com/ershoufang/fengtai/','http://bj.lianjia.com/ershoufang/shijingshan/','http://bj.lianjia.com/ershoufang/tongzhou/','http://bj.lianjia.com/ershoufang/changping/','http://bj.lianjia.com/ershoufang/daxing/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/','http://bj.lianjia.com/ershoufang/shunyi/','http://bj.lianjia.com/ershoufang/fangshan/','http://bj.lianjia.com/ershoufang/mentougou/','http://bj.lianjia.com/ershoufang/pinggu/','http://bj.lianjia.com/ershoufang/huairou/','http://bj.lianjia.com/ershoufang/miyun/','http://bj.lianjia.com/ershoufang/yanqing/','http://bj.lianjia.com/ershoufang/yanjiao/']
+			yield Request(url=self.start_urls, callback=self.parse)
 	
 
 	def parse(self,response):
@@ -66,6 +67,7 @@ class ershouSpider(Spider):
                 if baned:
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)
+			return
                         pass
 		time.sleep(3)
 		regex = '''resblockPosition(.+)'''
