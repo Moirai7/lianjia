@@ -63,7 +63,7 @@ DOWNLOADER_MIDDLEWARES = {
    'lianjia.useragent.UserAgent': 1,
    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 543,
    #'lianjia.proxymiddlewares.ProxyMiddleware':125,
-   #'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
+   'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware':None  
 }
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

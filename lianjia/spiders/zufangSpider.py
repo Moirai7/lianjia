@@ -22,13 +22,15 @@ class zufangSpider(Spider):
                         checked = []
                         with open('/home/zhanglan/lan/lianjia/lianjia/result/zufang.json','rb') as f:
                                 for line in f:
-                                        checked.add(json.loads(line)['url'])
+                                        checked.append(json.loads(line)['url'])
                         with open('/home/zhanglan/lan/lianjia/lianjia/result/zufangurls.json','rb') as f:
                                 for line in f:
                                         urls = json.loads(line)['url']
                                         for url in urls:
                                                 if url not in checked:
                                                         yield Request(url=url, callback=self.parse_details)
+						else:
+							print url +' already checked'
                 else:
                         yield Request(url=self.start_urls[0], callback=self.parse_details)
 
