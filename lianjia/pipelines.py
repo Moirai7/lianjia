@@ -18,9 +18,9 @@ class LianjiaPipeline(object):
 
 class JsonWriterPipeline(object):
 	def open_spider(self, spider):
-		self.ershou = open('result/ershou.json', 'wb')
-		self.zufang = open('result/zufang.json','wb')
-		self.url = open('result/url.json','wb')
+		self.ershou = open('result/ershou.json', 'ab')
+		self.zufang = open('result/zufang.json','ab')
+		self.url = open('result/url.json','ab')
 
 	def close_spider(self, spider):
 		self.ershou.close()
