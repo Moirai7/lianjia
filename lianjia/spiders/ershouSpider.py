@@ -1,12 +1,12 @@
 import json
 import re
-#import requests
+import requests
 import time
 from scrapy.spiders import Spider
-from lianjia.items import LianjiaErshouItem
+from lianjia.items import LianjiaErshouItem,LianjiaUrlItem
 from scrapy.selector import Selector
 from scrapy.http import Request
-#from lxml import etree
+from lxml import etree
 
 class ershouSpider(Spider):
 	name = "ershou"
@@ -16,6 +16,23 @@ class ershouSpider(Spider):
 	def __init__(self):
 		pass
 
+	def start_requests(self):
+		import os 
+		if os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json'):
+			checked = []
+			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json','rb') as f:
+				for line in f:
+					checked.add(json.loads(line)['url'])	
+			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json','rb') as f:
+				for line in f:
+					urls = json.loads(line)['url']
+					for url in urls:
+						if url not in checked:
+							yield Request(url=url, callback=self.parse_details)
+		else:
+			yield Request(url=self.start_urls[0], callback=self.parse_details)
+	
+
 	def parse(self,response):
 		baned = re.search('captcha',response.url)
 		if baned:
@@ -24,6 +41,9 @@ class ershouSpider(Spider):
 			pass
 		res = Selector(response)
 		urls = res.xpath("//div[@class='title']/a/@href").extract()
+		#item = LianjiaUrlItem()
+		#item['url']=urls
+		#yield item
 		for url in urls:	
 			#print url
 			yield Request(url=url, callback=self.parse_details)
@@ -46,12 +66,22 @@ class ershouSpider(Spider):
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)
                         pass
-		#time.sleep(3)
+		time.sleep(3)
 		regex = '''resblockPosition(.+)'''
 		#items = re.search(regex, latitude)
-		items = re.search(regex,response.body)
-		content = items.group()[:-1]  
-		longitude_latitude = content.split(':')[1]
+		try:
+			items = re.search(regex,response.body)
+			content = items.group()[:-1]  
+			longitude_latitude = content.split(':')[1]
+		except:
+			response = requests.get(response.url)
+			contents = etree.HTML(response.content.decode('utf-8'))
+			contents = etree.HTML(response.body)
+			latitude = contents.xpath("/ html / body / script[19]/text()").pop()
+			time.sleep(3)
+			items = re.search(regex,response.body)
+			content = items.group()[:-1]
+			longitude_latitude = content.split(':')[1]
 
 		item = LianjiaErshouItem()
 		item['url']=response.url

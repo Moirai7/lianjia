@@ -35,13 +35,14 @@ HEADER={
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
 }
 #REDIRECT_ENABLED = False
-DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 5
 COOKIES_ENABLED = False
 ITEM_PIPELINES = {
     'lianjia.pipelines.JsonWriterPipeline':300
     #'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
-DOWNLOAD_TIMEOUT = 10
+DOWNLOAD_TIMEOUT = 20
+RETRY_TIMES = 100
 '''
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
@@ -59,10 +60,10 @@ DEFAULT_REQUEST_HEADERS = {
   'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4'
 }
 DOWNLOADER_MIDDLEWARES = {
-   #'lianjia.useragent.UserAgent': 1,
+   'lianjia.useragent.UserAgent': 1,
    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 543,
    #'lianjia.proxymiddlewares.ProxyMiddleware':125,
-   'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
+   #'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware':None  
 }
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

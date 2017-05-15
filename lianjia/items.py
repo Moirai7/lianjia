@@ -13,6 +13,9 @@ class LianjiaItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+class LianjiaUrlItem(scrapy.Item):
+	url = scrapy.Field()
+
 class LianjiaZufangItem(scrapy.Item):
 	url = scrapy.Field()
 	latitude = scrapy.Field()
