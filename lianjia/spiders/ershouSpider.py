@@ -77,7 +77,6 @@ class ershouSpider(Spider):
 		except:
 			response = requests.get(response.url)
 			contents = etree.HTML(response.content.decode('utf-8'))
-			contents = etree.HTML(response.body)
 			latitude = contents.xpath("/ html / body / script[19]/text()").pop()
 			time.sleep(3)
 			items = re.search(regex,response.body)
@@ -98,19 +97,31 @@ class ershouSpider(Spider):
 		item['community']=res.xpath("//div[@class='communityName']/a[@class='info']/text()").extract()[0]
 		#item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
 		item['area']=' '.join(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
-		item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
-		item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
-		item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
-		item['structure']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
-		item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
-		item['building']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
-		item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
-		item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
-		item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
-		item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
-		item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[11]/text()").extract()[0]
-		item['elevator']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[12]/text()").extract()[0]
-		item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[13]/text()").extract()[0]
+		try:
+			item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
+			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
+			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
+			item['structure']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
+			item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
+			item['building']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
+			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
+			item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
+			item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
+			item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
+			item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[11]/text()").extract()[0]
+			item['elevator']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[12]/text()").extract()[0]
+			item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[13]/text()").extract()[0]
+		except:
+			item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
+			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
+			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
+			item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
+			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
+			item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
+			item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
+			item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
+			item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
+			item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
 		item['time']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[1]/text()").extract()[0]
 		item['belong']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[2]/text()").extract()[0]
 		item['trade']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[3]/text()").extract()[0]
