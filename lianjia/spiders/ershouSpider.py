@@ -16,13 +16,14 @@ class ershouSpider(Spider):
 		pass
 
 	def start_requests(self):
-		import os 
-		if os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json'):
+		import os
+		debug = False
+		if debug and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershou.json'):
 			checked = []
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershou.json','rb') as f:
 				for line in f:
 					checked.append(json.loads(line)['url'])	
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['url']
 					for url in urls:
@@ -31,10 +32,23 @@ class ershouSpider(Spider):
 						else:
 							print url +' already checked'
 		else:
-			self.start_urls = ['http://bj.lianjia.com/ershoufang/dongcheng/','http://bj.lianjia.com/ershoufang/xicheng/','http://bj.lianjia.com/ershoufang/chaoyang/a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/a3a4/','http://bj.lianjia.com/ershoufang/chaoyang/a5a6a7a8/','http://bj.lianjia.com/ershoufang/haidian/a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/haidian/a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/','http://bj.lianjia.com/ershoufang/shijingshan/','http://bj.lianjia.com/ershoufang/tongzhou/','http://bj.lianjia.com/ershoufang/changping/','http://bj.lianjia.com/ershoufang/daxing/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/','http://bj.lianjia.com/ershoufang/shunyi/','http://bj.lianjia.com/ershoufang/fangshan/','http://bj.lianjia.com/ershoufang/mentougou/','http://bj.lianjia.com/ershoufang/pinggu/','http://bj.lianjia.com/ershoufang/miyun/','http://bj.lianjia.com/ershoufang/yanqing/','http://bj.lianjia.com/ershoufang/yanjiao/']#'http://bj.lianjia.com/ershoufang/huairou/'
+			self.start_urls = ['http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/']#'http://bj.lianjia.com/ershoufang/huairou/'
+			self.refer = []
+			with open('/Users/emma/Work/lianjia/lianjia/result/url.json','rb') as f:
+				for line in f:
+					urls = json.loads(line)['refer']
+					self.refer.append(urls)
 			for url in self.start_urls:
-				yield Request(url=url, callback=self.parse)
-	
+				cur = 1
+				while (cur < 100):
+					_url=re.sub('\{page\}',str(cur+1),url)
+					if _url not in self.refer:
+						print 'check '+_url
+						yield Request(url=_url, callback=self.parse)
+						break
+					else:
+						print _url + ' already checked!'
+						cur=cur+1
 
 	def parse(self,response):
 		baned = re.search('captcha',response.url)
@@ -46,6 +60,7 @@ class ershouSpider(Spider):
 		urls = res.xpath("//div[@class='title']/a/@href").extract()
 		item = LianjiaUrlItem()
 		item['url']=urls
+		item['refer']=response.url
 		yield item
 		#for url in urls:	
 		#	#print url
@@ -55,16 +70,25 @@ class ershouSpider(Spider):
 			data = res.xpath("//div[@class='page-box house-lst-page-box']/@page-data").extract()[0]
 			url = res.xpath("//div[@class='page-box house-lst-page-box']/@page-url").extract()[0]
 		except:
-			print response.url
-			print response.body
 			return
 		data = json.loads(data)
 		cur = data['curPage']
 		total = data['totalPage']
-		if cur <= total:
-			url=re.sub('\{page\}',str(cur+1),'http://bj.lianjia.com'+url)
-			print url
-			yield Request(url=url,callback=self.parse)
+		if (cur < total):
+			_url=re.sub('\{page\}',str(cur+1),'http://bj.lianjia.com'+url)
+			yield Request(url=_url,callback=self.parse)
+
+		'''
+		while (cur < total):
+			_url=re.sub('\{page\}',str(cur+1),'http://bj.lianjia.com'+url)
+			if _url not in self.refer:
+				print 'check '+_url
+				yield Request(url=_url,callback=self.parse)
+				break
+			else:
+				print _url + ' already checked!'
+				cur=cur+1
+		'''
 
 	def parse_details(self,response):
 		#response = requests.get(url)

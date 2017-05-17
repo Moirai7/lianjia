@@ -15,6 +15,7 @@ class LianjiaItem(scrapy.Item):
 
 class LianjiaUrlItem(scrapy.Item):
 	url = scrapy.Field()
+	refer = scrapy.Field()
 
 class LianjiaZufangItem(scrapy.Item):
 	url = scrapy.Field()
