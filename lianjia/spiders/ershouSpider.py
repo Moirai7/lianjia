@@ -18,12 +18,12 @@ class ershouSpider(Spider):
 	def start_requests(self):
 		import os
 		debug = False
-		if debug and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershou.json'):
+		if debug and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json'):
 			checked = []
-			with open('/Users/emma/Work/lianjia/lianjia/result/ershou.json','rb') as f:
+			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json','rb') as f:
 				for line in f:
 					checked.append(json.loads(line)['url'])	
-			with open('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json','rb') as f:
+			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['url']
 					for url in urls:
@@ -32,9 +32,9 @@ class ershouSpider(Spider):
 						else:
 							print url +' already checked'
 		else:
-			self.start_urls = ['http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/']#'http://bj.lianjia.com/ershoufang/huairou/'
+			self.start_urls = ['http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/']#'http://bj.lianjia.com/ershoufang/huairou/','http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/'
 			self.refer = []
-			with open('/Users/emma/Work/lianjia/lianjia/result/url.json','rb') as f:
+			with open('/home/zhanglan/lan/lianjia/lianjia/result/url.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['refer']
 					self.refer.append(urls)
