@@ -6,12 +6,13 @@ from datetime import datetime, timedelta
 from twisted.web._newclient import ResponseNeverReceived
 from twisted.internet.error import TimeoutError, ConnectionRefusedError, ConnectError
 import fetch_free_proxyes
+import re
 
 logger = logging.getLogger(__name__)
 
 class HttpProxyMiddleware(object):
     # 遇到这些类型的错误直接当做代理不可用处理掉, 不再传给retrymiddleware
-    DONT_RETRY_ERRORS = (TimeoutError, ConnectionRefusedError, ResponseNeverReceived, ConnectError, ValueError)
+    DONT_RETRY_ERRORS = (TimeoutError, ConnectionRefusedError, ResponseNeverReceived, ConnectError, ValueError,IndexError)
 
     def __init__(self, settings):
         # 保存上次不用代理直接连接的时间点
@@ -195,7 +196,8 @@ class HttpProxyMiddleware(object):
         request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址
 
         # spider发现parse error, 要求更换代理
-        if "change_proxy" in request.meta.keys() and request.meta["change_proxy"]:
+	baned = re.search('captcha',request.url)
+        if baned or ("change_proxy" in request.meta.keys() and request.meta["change_proxy"]):
             logger.info("change proxy request get by spider: %s"  % request)
             self.invalid_proxy(request.meta["proxy_index"])
             request.meta["change_proxy"] = False
@@ -212,9 +214,10 @@ class HttpProxyMiddleware(object):
 
         # status不是正常的200而且不在spider声明的正常爬取过程中可能出现的
         # status列表中, 则认为代理无效, 切换代理
-        if response.status != 200 \
+	baned = re.search('captcha',response.url)
+        if baned or (response.status != 200 \
                 and (not hasattr(spider, "website_possible_httpstatus_list") \
-                             or response.status not in spider.website_possible_httpstatus_list):
+                             or response.status not in spider.website_possible_httpstatus_list)):
             logger.info("response status not in spider.website_possible_httpstatus_list")
             self.invalid_proxy(request.meta["proxy_index"])
             new_request = request.copy()
@@ -227,11 +230,13 @@ class HttpProxyMiddleware(object):
         """
         处理由于使用代理导致的连接异常
         """
-        logger.debug("%s exception: %s" % (self.proxyes[request.meta["proxy_index"]]["proxy"], exception))
-        request_proxy_index = request.meta["proxy_index"]
+	if "proxy_index" in request.meta:
+	        logger.debug("%s exception: %s" % (self.proxyes[request.meta["proxy_index"]]["proxy"], exception))
+        	request_proxy_index = request.meta["proxy_index"]
 
         # 只有当proxy_index>fixed_proxy-1时才进行比较, 这样能保证至少本地直连是存在的.
         if isinstance(exception, self.DONT_RETRY_ERRORS):
+            print 'dont retry errors'
             if request_proxy_index > self.fixed_proxy - 1 and self.invalid_proxy_flag: # WARNING 直连时超时的话换个代理还是重试? 这是策略问题
                 if self.proxyes[request_proxy_index]["count"] < self.invalid_proxy_threshold:
                     self.invalid_proxy(request_proxy_index)
