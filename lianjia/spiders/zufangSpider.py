@@ -18,21 +18,40 @@ class zufangSpider(Spider):
 
 	def start_requests(self):
                 import os
-                if os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/zufangurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/zufang.json'):
+                if os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/zufangurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/zufang.json'):
                         checked = []
-                        with open('/home/zhanglan/lan/lianjia/lianjia/result/zufang.json','rb') as f:
+                        with open('/Users/emma/Work/lianjia/lianjia/result/zufang.json','rb') as f:
                                 for line in f:
                                         checked.append(json.loads(line)['url'])
-                        with open('/home/zhanglan/lan/lianjia/lianjia/result/zufangurls.json','rb') as f:
-                                for line in f:
-                                        urls = json.loads(line)['url']
-                                        for url in urls:
+                        with open('/Users/emma/Work/lianjia/lianjia/result/zufangurls.json','rb') as f:
+                                pages = json.load(f)
+                                for page in pages:
+					urls = page['data']
+					for url in urls:
+						print url
                                                 if url not in checked:
                                                         yield Request(url=url, callback=self.parse_details)
+							checked.append(url)
 						else:
 							print url +' already checked'
                 else:
-                        yield Request(url=self.start_urls[0], callback=self.parse_details)
+			self.start_urls = ['http://bj.lianjia.com/zufang/changping/pg{page}/','http://bj.lianjia.com/zufang/dongcheng/pg{page}/','http://bj.lianjia.com/zufang/xicheng/pg{page}/','http://bj.lianjia.com/zufang/haidian/pg{page}','http://bj.lianjia.com/zufang/shijingshan/pg{page}/','http://bj.lianjia.com/zufang/daxing/pg{page}/','http://bj.lianjia.com/zufang/fangshan/pg{page}/','http://bj.lianjia.com/zufang/mentougou/pg{page}/','http://bj.lianjia.com/zufang/yanjiao/pg{page}/','http://bj.lianjia.com/zufang/shunyi/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/erp16000/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/brp0erp5700/pg{page}/','http://bj.lianjia.com/zufang/fengtai/pg{page}/','http://bj.lianjia.com/zufang/tongzhou/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/brp5700erp16000/pg{page}/','http://bj.lianjia.com/zufang/yizhuangkaifaqu/pg{page}']
+			self.refer = []
+                        with open('/Users/emma/Work/lianjia/lianjia/result/url.json','rb') as f:
+                                for line in f:
+                                        urls = json.loads(line)['refer']
+                                        self.refer.append(urls)
+                        for url in self.start_urls:
+                                cur = 1
+                                while (cur < 100):
+                                        _url=re.sub('\{page\}',str(cur+1),url)
+                                        if _url not in self.refer:
+                                                print 'check '+_url
+                                                yield Request(url=_url, callback=self.parse)
+                                                break
+                                        else:
+                                                print _url + ' already checked!'
+                                                cur=cur+1
 
 	def parse(self,response):
 		baned = re.search('captcha',response.url)
@@ -74,12 +93,7 @@ class zufangSpider(Spider):
         	        content = items.group()[:-1]
 			longitude_latitude = content.split(':')[1]
 		except:
-			response = requests.get(response.url)
-			time.sleep(3)
-			items = re.search(regex,response.body)
-                        content = items.group()[:-1]
-                        longitude_latitude = content.split(':')[1]
-
+			return
                 item = LianjiaZufangItem()
                 item['url']=response.url
                 item['latitude']=longitude_latitude[1:-1]
