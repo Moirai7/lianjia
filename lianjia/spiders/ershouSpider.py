@@ -18,7 +18,7 @@ class ershouSpider(Spider):
 
 	def start_requests(self):
 		import os
-		debug = False
+		debug = True
 		if debug and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershou.json'):
 			checked = []
 			with open('/Users/emma/Work/lianjia/lianjia/result/ershou.json','rb') as f:
@@ -30,8 +30,13 @@ class ershouSpider(Spider):
 					for url in urls:
 						if url not in checked:
 							yield Request(url=url, callback=self.parse_details)
-						else:
-							print url +' already checked'
+							checked.append(url)
+							#self.items+=1
+							#if self.items>30:
+							#	time.sleep(5*60)
+							#	self.items=0
+						#else:
+						#	print url +' already checked'
 		else:
 			self.start_urls = ['http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/pg{page}']#'http://bj.lianjia.com/ershoufang/huairou/pg{page}'
 			self.refer = []
@@ -63,9 +68,6 @@ class ershouSpider(Spider):
 		item['url']=urls
 		item['refer']=response.url
 		yield item
-		self.items +=1 
-		if self.items > 50:
-			return
 		#for url in urls:	
 		#	#print url
 		#	yield Request(url=url, callback=self.parse_details)
@@ -113,14 +115,7 @@ class ershouSpider(Spider):
 			content = items.group()[:-1]  
 			longitude_latitude = content.split(':')[1]
 		except:
-			response = requests.get(response.url)
-			contents = etree.HTML(response.content.decode('utf-8'))
-			latitude = contents.xpath("/ html / body / script[19]/text()").pop()
-			time.sleep(3)
-			items = re.search(regex,response.body)
-			content = items.group()[:-1]
-			longitude_latitude = content.split(':')[1]
-
+			return
 		item = LianjiaErshouItem()
 		item['url']=response.url
 		item['latitude']=longitude_latitude[1:-1]

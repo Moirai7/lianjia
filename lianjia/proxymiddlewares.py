@@ -11,19 +11,11 @@ class ProxyMiddleware(object):
     #代理IP列表
     
     proxyList = [ \
-	'chacha20',
+	'159.255.163.189:80',
+	'101.255.51.146:3128',
 	'113.4.136.142:8998',
 	'94.20.21.38:3128',
 	'144.217.128.236:8080',
-	'49.213.9.10:3128',
-	'176.31.125.111:80',
-	'150.107.141.253:8080',
-	'222.188.96.181:8998',
-	'41.242.141.134:8080',
-	'45.115.2.137:8080',
-	'62.84.66.39:22684',
-	'91.98.71.70:80',
-	'139.219.194.39:8088'
         ]
     
 
@@ -52,7 +44,7 @@ class ProxyMiddleware(object):
 	#self.pro_adr = j[0]['ip']
 	"""
 	#self.proxyList = httpsProxys.NEWHTTPS()
-	self.proxyList = fetch_free_proxyes.fetch_all()
+	#self.proxyList = fetch_free_proxyes.fetch_all()
 	self.pro_adr = random.choice(self.proxyList)
 	print "USE PROXY -> http://" + self.pro_adr
 	t = Timer(600,self.get_proxy)
@@ -78,10 +70,6 @@ class ProxyMiddleware(object):
 		return_request = self.change_proxy(request,'2')
 		if return_request:
                    return return_request
-	else:
-		return_request = self.change_proxy(request,'22')
-		if return_request:
-			return return_request
 	return request
 
     def process_exception(self, request, exception, spider):
@@ -102,7 +90,6 @@ class ProxyMiddleware(object):
 	self.proxyList.remove(self.pro_adr)
 	if len(self.proxyList)==0:
 		self.get_proxy()
-	self.pro_adr = random.choice(self.proxyList)
 	print "USE PROXY "+code+" -> http://" + self.pro_adr
 	request.meta['proxy'] = "http://" + self.pro_adr
 	return request

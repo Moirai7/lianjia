@@ -43,13 +43,6 @@ ITEM_PIPELINES = {
 }
 DOWNLOAD_TIMEOUT = 20
 RETRY_TIMES = 100
-'''
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware': 350,
-    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 351,
-    'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 403,
-}
-'''
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
   'Accept-Language': 'zh-CN,zh;q=0.8',
@@ -60,9 +53,9 @@ DEFAULT_REQUEST_HEADERS = {
   'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4'
 }
 DOWNLOADER_MIDDLEWARES = {
-   'lianjia.useragent.UserAgent': 1,
+   #'lianjia.useragent.UserAgent': 1,
    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 543,
-   #'lianjia.proxymiddlewares.ProxyMiddleware':125,
+   'lianjia.proxymiddlewares.ProxyMiddleware':125,
    #'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 302,
    'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware':None  
 }
