@@ -28,7 +28,6 @@ class zufangSpider(Spider):
                                 for page in pages:
 					urls = page['data']
 					for url in urls:
-						print url
                                                 if url not in checked:
                                                         yield Request(url=url, callback=self.parse_details)
 							checked.append(url)

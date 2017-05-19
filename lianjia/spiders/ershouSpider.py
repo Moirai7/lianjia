@@ -31,10 +31,10 @@ class ershouSpider(Spider):
 						if url not in checked:
 							yield Request(url=url, callback=self.parse_details)
 							checked.append(url)
-							#self.items+=1
-							#if self.items>30:
-							#	time.sleep(5*60)
-							#	self.items=0
+							self.items+=1
+							if self.items>30:
+								time.sleep(5*60)
+								self.items=0
 						#else:
 						#	print url +' already checked'
 		else:

@@ -35,7 +35,7 @@ HEADER={
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
 }
 #REDIRECT_ENABLED = False
-DOWNLOAD_DELAY = 5
+DOWNLOAD_DELAY = 7
 COOKIES_ENABLED = False
 ITEM_PIPELINES = {
     'lianjia.pipelines.JsonWriterPipeline':300
@@ -53,7 +53,7 @@ DEFAULT_REQUEST_HEADERS = {
   'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4'
 }
 DOWNLOADER_MIDDLEWARES = {
-   #'lianjia.useragent.UserAgent': 1,
+   'lianjia.useragent.UserAgent': 1,
    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 543,
    #'lianjia.proxymiddlewares.ProxyMiddleware':125,
    #'lianjia.HttpProxyMiddleware.HttpProxyMiddleware': 302,
