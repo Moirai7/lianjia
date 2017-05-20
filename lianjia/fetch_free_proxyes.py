@@ -38,6 +38,15 @@ def fetch_kxdaili(page):
         logger.warning("fail to fetch from kxdaili")
     return proxyes
 
+def fetch_dali():
+	r=requests.get('http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=300&b_pcchrome=1&protocol=1&method=2&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
+	j = r.text
+	with open('ip.json', 'w') as outfile:
+                json.dump(j, outfile)
+	#proxyList = j['data']['proxy_list']
+	proxyList = j.split(' ')
+	return proxyList
+
 def img2port(img_url):
     """
     mimvp.com的端口号用图片来显示, 本函数将图片url转为端口, 目前的临时性方法并不准确
@@ -184,6 +193,7 @@ def fetch_all(endpage=2):
     proxyes += fetch_ip181()
     proxyes += fetch_httpdaili()
     proxyes += fetch_66ip()
+    proxyes += fetch_dali()
     valid_proxyes = []
     logger.info("checking proxyes validation")
     for p in proxyes:
