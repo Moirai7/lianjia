@@ -18,7 +18,8 @@ class HttpProxyMiddleware(object):
         # 保存上次不用代理直接连接的时间点
         self.last_no_proxy_time = datetime.now()
         # 一定分钟数后切换回不用代理, 因为用代理影响到速度
-        self.recover_interval = 20
+        self.recover_interval = 60
+	self.stop_interval = 60
         # 一个proxy如果没用到这个数字就被发现老是超时, 则永久移除该proxy. 设为0则不会修改代理文件.
         self.dump_count_threshold = 20
         # 存放代理列表的文件, 每行一个代理, 格式为ip:port, 注意没有http://, 而且这个文件会被修改, 注意备份
@@ -146,6 +147,7 @@ class HttpProxyMiddleware(object):
             proxy = self.proxyes[self.proxy_index]
 
         if self.proxy_index == 0: # 每次不用代理直接下载时更新self.last_no_proxy_time
+	    self.times+=1
             self.last_no_proxy_time = datetime.now()
 
         if proxy["proxy"]:
@@ -185,14 +187,19 @@ class HttpProxyMiddleware(object):
                 p = self.proxyes[i]
                 if p["valid"] or p["count"] >= self.dump_count_threshold:
                     fd.write(p["proxy"][7:]+"\n") # 只保存有效的代理
-
+    times = 0
     def process_request(self, request, spider):
         """
         将request设置为使用代理
         """
+	if self.proxy_index == 0 and self.times > self.stop_interval:
+	    logger.info("After %d minutes later, stop localhost" % self.stop_interval)
+	    self.inc_proxy_index()
+
         if self.proxy_index > 0  and datetime.now() > (self.last_no_proxy_time + timedelta(minutes=self.recover_interval)):
             logger.info("After %d minutes later, recover from using proxy" % self.recover_interval)
             self.last_no_proxy_time = datetime.now()
+	    self.times = 0
             self.proxy_index = 0
 
         request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址

@@ -41,7 +41,7 @@ def fetch_kxdaili(page):
 
 def fetch_dali():
 	#r=requests.get('http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=50&&b_pcchrome=1&protocol=1&method=2&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
-	r=requests.get(u'http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=30&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
+	r=requests.get(u'http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=15&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
 	j = r.text
 	#proxyList = j['data']['proxy_list']
 	proxyList = j.split(' ')
