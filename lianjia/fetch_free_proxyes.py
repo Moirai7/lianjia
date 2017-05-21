@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import urllib2
 import logging
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -39,10 +40,9 @@ def fetch_kxdaili(page):
     return proxyes
 
 def fetch_dali():
-	r=requests.get('http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=300&b_pcchrome=1&protocol=1&method=2&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
+	#r=requests.get('http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=50&&b_pcchrome=1&protocol=1&method=2&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
+	r=requests.get(u'http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=30&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3')
 	j = r.text
-	with open('ip.json', 'w') as outfile:
-                json.dump(j, outfile)
 	#proxyList = j['data']['proxy_list']
 	proxyList = j.split(' ')
 	return proxyList
@@ -175,7 +175,7 @@ def fetch_tebiere(proxy):
 
 def check(proxy):
     import urllib2
-    url = "http://www.baidu.com/js/bdsug.js?v=1.0.3.0"
+    url = "http://bj.lianjia.com/ershoufang/"
     proxy_handler = urllib2.ProxyHandler({'http': "http://" + proxy})
     opener = urllib2.build_opener(proxy_handler,urllib2.HTTPHandler)
     try:
@@ -186,13 +186,14 @@ def check(proxy):
 
 def fetch_all(endpage=2):
     proxyes = []
+    '''
     for i in range(1, endpage):
         proxyes += fetch_kxdaili(i)
     proxyes += fetch_mimvp()
     proxyes += fetch_xici()
     proxyes += fetch_ip181()
     proxyes += fetch_httpdaili()
-    proxyes += fetch_66ip()
+    proxyes += fetch_66ip()'''
     proxyes += fetch_dali()
     valid_proxyes = []
     logger.info("checking proxyes validation")

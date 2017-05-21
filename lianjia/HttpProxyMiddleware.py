@@ -123,6 +123,7 @@ class HttpProxyMiddleware(object):
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
             self.reset_proxyes()
+            #self.fetch_new_proxyes()
 
         if self.len_valid_proxy() < self.extend_proxy_threshold: # 代理数量仍然不足, 抓取新的代理
             logger.info("valid proxy < threshold: %d/%d" % (self.len_valid_proxy(), self.extend_proxy_threshold))
@@ -135,13 +136,12 @@ class HttpProxyMiddleware(object):
         #    logger.info("%d munites since last fetch" % self.fetch_proxy_interval)
         #    self.fetch_new_proxyes()
 
-    times = 0
     def set_proxy(self, request):
         """
         将request设置使用为当前的或下一个有效代理
         """
         proxy = self.proxyes[self.proxy_index]
-        if not proxy["valid"] or proxy["count"]>20:
+        if not proxy["valid"]:
             self.inc_proxy_index()
             proxy = self.proxyes[self.proxy_index]
 

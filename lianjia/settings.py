@@ -35,14 +35,14 @@ HEADER={
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
 }
 #REDIRECT_ENABLED = False
-DOWNLOAD_DELAY = 7
+DOWNLOAD_DELAY = 1
 COOKIES_ENABLED = False
 ITEM_PIPELINES = {
     'lianjia.pipelines.JsonWriterPipeline':300
     #'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
-DOWNLOAD_TIMEOUT = 20
-RETRY_TIMES = 100
+DOWNLOAD_TIMEOUT = 10
+RETRY_TIMES = 10
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',
   'Accept-Language': 'zh-CN,zh;q=0.8',
