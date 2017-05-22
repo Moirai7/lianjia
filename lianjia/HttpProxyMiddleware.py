@@ -193,7 +193,7 @@ class HttpProxyMiddleware(object):
         将request设置为使用代理
         """
 	if self.proxy_index == 0 and self.times > self.stop_interval:
-	    logger.info("After %d minutes later, stop localhost" % self.stop_interval)
+	    logger.info("After %d times later, stop localhost" % self.stop_interval)
 	    self.inc_proxy_index()
 
         if self.proxy_index > 0  and datetime.now() > (self.last_no_proxy_time + timedelta(minutes=self.recover_interval)):
