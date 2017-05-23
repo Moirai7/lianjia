@@ -121,7 +121,8 @@ class HttpProxyMiddleware(object):
         # 两轮proxy_index==0的时间间隔过短， 说明出现了验证码抖动，扩展代理列表
         if self.proxy_index == 0 and datetime.now() < self.last_no_proxy_time + timedelta(minutes=2):
             logger.info("captcha thrashing")
-            self.fetch_new_proxyes()
+            #self.fetch_new_proxyes()
+            self.reset_proxyes()
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
             self.reset_proxyes()
@@ -164,6 +165,7 @@ class HttpProxyMiddleware(object):
         并调整当前proxy_index到下一个有效代理的位置
         """
         if index < self.fixed_proxy: # 可信代理永远不会设为invalid
+	    logger.info("trust proxy %s" % self.proxyes[index])
 	    self.inc_proxy_index()
             return
 
