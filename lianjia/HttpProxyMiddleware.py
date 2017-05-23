@@ -18,7 +18,7 @@ class HttpProxyMiddleware(object):
         # 保存上次不用代理直接连接的时间点
         self.last_no_proxy_time = datetime.now()
         # 一定分钟数后切换回不用代理, 因为用代理影响到速度
-        self.recover_interval = 60
+        self.recover_interval = 20
 	self.stop_interval = 60
         # 一个proxy如果没用到这个数字就被发现老是超时, 则永久移除该proxy. 设为0则不会修改代理文件.
         self.dump_count_threshold = 20
@@ -29,7 +29,7 @@ class HttpProxyMiddleware(object):
         # 当有效代理小于这个数时(包括直连), 从网上抓取新的代理, 可以将这个数设为为了满足每个ip被要求输入验证码后得到足够休息时间所需要的代理数
         # 例如爬虫在十个可用代理之间切换时, 每个ip经过数分钟才再一次轮到自己, 这样就能get一些请求而不用输入验证码.
         # 如果这个数过小, 例如两个, 爬虫用A ip爬了没几个就被ban, 换了一个又爬了没几次就被ban, 这样整个爬虫就会处于一种忙等待的状态, 影响效率
-        self.extend_proxy_threshold = 10
+        self.extend_proxy_threshold = 5
         # 初始化代理列表
         self.proxyes = [{"proxy": None, "valid": True, "count": 0}]
         # 初始时使用0号代理(即无代理)
@@ -123,8 +123,8 @@ class HttpProxyMiddleware(object):
             self.fetch_new_proxyes()
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
-            self.reset_proxyes()
-            #self.fetch_new_proxyes()
+            #self.reset_proxyes()
+            self.fetch_new_proxyes()
 
         if self.len_valid_proxy() < self.extend_proxy_threshold: # 代理数量仍然不足, 抓取新的代理
             logger.info("valid proxy < threshold: %d/%d" % (self.len_valid_proxy(), self.extend_proxy_threshold))
@@ -195,11 +195,11 @@ class HttpProxyMiddleware(object):
 	if self.proxy_index == 0 and self.times > self.stop_interval:
 	    logger.info("After %d times later, stop localhost" % self.stop_interval)
 	    self.inc_proxy_index()
+	    self.times = 0
 
         if self.proxy_index > 0  and datetime.now() > (self.last_no_proxy_time + timedelta(minutes=self.recover_interval)):
             logger.info("After %d minutes later, recover from using proxy" % self.recover_interval)
             self.last_no_proxy_time = datetime.now()
-	    self.times = 0
             self.proxy_index = 0
 
         request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址
