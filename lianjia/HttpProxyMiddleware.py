@@ -19,6 +19,7 @@ class HttpProxyMiddleware(object):
         self.last_no_proxy_time = datetime.now()
         # 一定分钟数后切换回不用代理, 因为用代理影响到速度
         self.recover_interval = 20
+	#local一次最多下这么多
 	self.stop_interval = 60
         # 一个proxy如果没用到这个数字就被发现老是超时, 则永久移除该proxy. 设为0则不会修改代理文件.
         self.dump_count_threshold = 20
@@ -123,8 +124,8 @@ class HttpProxyMiddleware(object):
             self.fetch_new_proxyes()
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
-            #self.reset_proxyes()
-            self.fetch_new_proxyes()
+            self.reset_proxyes()
+            #self.fetch_new_proxyes()
 
         if self.len_valid_proxy() < self.extend_proxy_threshold: # 代理数量仍然不足, 抓取新的代理
             logger.info("valid proxy < threshold: %d/%d" % (self.len_valid_proxy(), self.extend_proxy_threshold))
