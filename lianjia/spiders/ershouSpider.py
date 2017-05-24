@@ -134,7 +134,7 @@ class ershouSpider(Spider):
 		item['community']=res.xpath("//div[@class='communityName']/a[@class='info']/text()").extract()[0]
 		#item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
 		item['area']=' '.join(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
-		if item['url'].find('101100993801')!=-1:
+		if item['url'].find('101101376640')!=-1 or item['url'].find('101101130097')!=-1:
 			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
 			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
 			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]

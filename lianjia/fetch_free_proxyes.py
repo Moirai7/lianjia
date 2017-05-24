@@ -175,7 +175,7 @@ def fetch_tebiere(proxy):
 
 def check(proxy):
     import urllib2
-    url = "http://bj.lianjia.com/ershoufang/101101142546.html"
+    url = "https://bj.lianjia.com/ershoufang/101101142546.html"
     proxy_handler = urllib2.ProxyHandler({'http': "http://" + proxy})
     opener = urllib2.build_opener(proxy_handler,urllib2.HTTPHandler)
     try:

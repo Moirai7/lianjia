@@ -7,6 +7,7 @@ from twisted.web._newclient import ResponseNeverReceived
 from twisted.internet.error import TimeoutError, ConnectionRefusedError, ConnectError
 import fetch_free_proxyes
 import re
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -114,15 +115,15 @@ class HttpProxyMiddleware(object):
         """
         assert self.proxyes[0]["valid"]
         while True:
-            self.proxy_index = (self.proxy_index + 1) % len(self.proxyes)
+            self.proxy_index = random.choice(xrange(0,len(self.proxyes)))#(self.proxy_index + 1) % len(self.proxyes)
             if self.proxyes[self.proxy_index]["valid"]:
                 break
 
         # 两轮proxy_index==0的时间间隔过短， 说明出现了验证码抖动，扩展代理列表
         if self.proxy_index == 0 and datetime.now() < self.last_no_proxy_time + timedelta(minutes=2):
             logger.info("captcha thrashing")
-            #self.fetch_new_proxyes()
-            self.reset_proxyes()
+            self.fetch_new_proxyes()
+            #self.reset_proxyes()
 
         if self.len_valid_proxy() <= self.fixed_proxy or self.len_valid_proxy() < self.extend_proxy_threshold: # 如果代理列表中有效的代理不足的话重置为valid
             self.reset_proxyes()
