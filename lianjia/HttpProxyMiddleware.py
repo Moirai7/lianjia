@@ -30,7 +30,7 @@ class HttpProxyMiddleware(object):
         # 当有效代理小于这个数时(包括直连), 从网上抓取新的代理, 可以将这个数设为为了满足每个ip被要求输入验证码后得到足够休息时间所需要的代理数
         # 例如爬虫在十个可用代理之间切换时, 每个ip经过数分钟才再一次轮到自己, 这样就能get一些请求而不用输入验证码.
         # 如果这个数过小, 例如两个, 爬虫用A ip爬了没几个就被ban, 换了一个又爬了没几次就被ban, 这样整个爬虫就会处于一种忙等待的状态, 影响效率
-        self.extend_proxy_threshold = 5
+        self.extend_proxy_threshold = 10
         # 初始化代理列表
         self.proxyes = [{"proxy": None, "valid": True, "count": 0}]
         # 初始时使用0号代理(即无代理)
