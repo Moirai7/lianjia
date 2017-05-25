@@ -42,7 +42,7 @@ ITEM_PIPELINES = {
     'lianjia.pipelines.JsonWriterPipeline':300
     #'lianjia.pipelines.MySQLStoreCnblogsPipeline':300
 }
-DOWNLOAD_TIMEOUT = 10
+DOWNLOAD_TIMEOUT = 30
 RETRY_TIMES = 10
 DEFAULT_REQUEST_HEADERS = {
   'Accept': 'text/html, application/xhtml+xml, application/xml',

@@ -19,14 +19,14 @@ class ershouSpider(Spider):
 	def start_requests(self):
 		import os
 		debug = True
-		if debug and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json'):
+		if debug and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/ershou.json'):
 			checked = []
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershou.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershou.json','rb') as f:
 				for line in f:
 					url = json.loads(line)['url']
 					url = filter(lambda ch: ch in '0123456789',url)
 					checked.append(url)	
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/ershouurls.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/ershouurls.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['url']
 					for url in urls:
@@ -44,7 +44,7 @@ class ershouSpider(Spider):
 		else:
 			self.start_urls = ['http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/pg{page}']#'http://bj.lianjia.com/ershoufang/huairou/pg{page}'
 			self.refer = []
-			with open('/home/zhanglan/lan/lianjia/lianjia/result/url.json','rb') as f:
+			with open('/Users/emma/Work/lianjia/lianjia/result/url.json','rb') as f:
 				for line in f:
 					urls = json.loads(line)['refer']
 					self.refer.append(urls)
@@ -134,36 +134,36 @@ class ershouSpider(Spider):
 		item['community']=res.xpath("//div[@class='communityName']/a[@class='info']/text()").extract()[0]
 		#item['area']=json.dumps(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
 		item['area']=' '.join(res.xpath("//div[@class='areaName']/span[@class='info']/a/text()").extract())
-		if item['url'].find('101101540898')!=-1 or item['url'].find('101101130097')!=-1:
-			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
-			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
-			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
-		else:
-		   try:
+		try:
 			item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
 			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
 			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
 			item['structure']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
-			item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
-			item['building']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
-			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
-			item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
-			item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
-			item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
-			item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[11]/text()").extract()[0]
-			item['elevator']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[12]/text()").extract()[0]
-			item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[13]/text()").extract()[0]
-		   except:
+		    	item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
+		    	item['building']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
+		    	item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
+	            	item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
+		    	item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
+		    	item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
+		    	item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[11]/text()").extract()[0]
+		    	item['elevator']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[12]/text()").extract()[0]
+		    	item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[13]/text()").extract()[0]
+		except:
+		    try:
 			item['style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
 			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
 			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
 			item['in_area']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[4]/text()").extract()[0]
-			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
-			item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
-			item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
-			item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
-			item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
-			item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
+		  	item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[5]/text()").extract()[0]
+		    	item['building_style']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[6]/text()").extract()[0]
+		    	item['status']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[7]/text()").extract()[0]
+		    	item['scale']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[8]/text()").extract()[0]
+		    	item['warm']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[9]/text()").extract()[0]
+		    	item['fixed_year']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[10]/text()").extract()[0]
+		    except:
+			item['floor']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[1]/text()").extract()[0]
+			item['housearea']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[2]/text()").extract()[0]
+			item['orient']=res.xpath("//div[@class='base']/div[@class='content']/ul/li[3]/text()").extract()[0]
 		item['time']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[1]/text()").extract()[0]
 		item['belong']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[2]/text()").extract()[0]
 		item['trade']=res.xpath("//div[@class='transaction']/div[@class='content']/ul/li[3]/text()").extract()[0]

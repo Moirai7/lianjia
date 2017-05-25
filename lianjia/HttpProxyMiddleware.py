@@ -21,7 +21,7 @@ class HttpProxyMiddleware(object):
         # 一定分钟数后切换回不用代理, 因为用代理影响到速度
         self.recover_interval = 20
 	#local一次最多下这么多
-	self.stop_interval = 60
+	self.stop_interval = 150
         # 一个proxy如果没用到这个数字就被发现老是超时, 则永久移除该proxy. 设为0则不会修改代理文件.
         self.dump_count_threshold = 20
         # 存放代理列表的文件, 每行一个代理, 格式为ip:port, 注意没有http://, 而且这个文件会被修改, 注意备份
@@ -136,9 +136,9 @@ class HttpProxyMiddleware(object):
         logger.info("now using new proxy: %s" % self.proxyes[self.proxy_index]["proxy"])
 
         # 一定时间没更新后可能出现了在目前的代理不断循环不断验证码错误的情况, 强制抓取新代理
-        #if datetime.now() > self.last_fetch_proxy_time + timedelta(minutes=self.fetch_proxy_interval):
-        #    logger.info("%d munites since last fetch" % self.fetch_proxy_interval)
-        #    self.fetch_new_proxyes()
+        if datetime.now() > self.last_fetch_proxy_time + timedelta(minutes=self.fetch_proxy_interval):
+            logger.info("%d munites since last fetch" % self.fetch_proxy_interval)
+            self.fetch_new_proxyes()
 
     def set_proxy(self, request):
         """
@@ -193,6 +193,13 @@ class HttpProxyMiddleware(object):
                     fd.write(p["proxy"][7:]+"\n") # 只保存有效的代理
     times = 0
     def process_request(self, request, spider):
+        # spider发现parse error, 要求更换代理
+	baned = re.search('captcha',request.url)
+        if baned or ("change_proxy" in request.meta.keys() and request.meta["change_proxy"]):
+            logger.info("change proxy request get by spider: %s"  % request)
+            self.invalid_proxy(request.meta["proxy_index"])
+            request.meta["change_proxy"] = False
+
         """
         将request设置为使用代理
         """
@@ -207,13 +214,7 @@ class HttpProxyMiddleware(object):
             self.proxy_index = 0
 
         request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址
-
-        # spider发现parse error, 要求更换代理
-	baned = re.search('captcha',request.url)
-        if baned or ("change_proxy" in request.meta.keys() and request.meta["change_proxy"]):
-            logger.info("change proxy request get by spider: %s"  % request)
-            self.invalid_proxy(request.meta["proxy_index"])
-            request.meta["change_proxy"] = False
+	
         self.set_proxy(request)
 
     def process_response(self, request, response, spider):
