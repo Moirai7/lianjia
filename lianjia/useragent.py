@@ -17,6 +17,7 @@ class UserAgent(UserAgentMiddleware):
             #显示当前使用的useragent
             #print "********Current UserAgent:%s************" %ua
             request.headers.setdefault('User-Agent', ua)
+    '''
     files = open('user-agents.txt','r')
     user_agent_list=[]
     while 1:
@@ -66,4 +67,3 @@ class UserAgent(UserAgentMiddleware):
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 "
         "(KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
        ]
-    '''
