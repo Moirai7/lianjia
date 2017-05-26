@@ -18,12 +18,13 @@ class zufangSpider(Spider):
 
 	def start_requests(self):
                 import os
-                if os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/zufangurls.json') and os.path.isfile('/Users/emma/Work/lianjia/lianjia/result/zufang.json'):
+		parent_path = os.path.dirname(os.getcwd())
+                if os.path.isfile(parent_path+'/lianjia/result/zufangurls.json') and os.path.isfile(parent_path+'/lianjia/result/zufang.json'):
                         checked = []
-                        with open('/Users/emma/Work/lianjia/lianjia/result/zufang.json','rb') as f:
+                        with open(parent_path+'/lianjia/result/zufang.json','rb') as f:
                                 for line in f:
                                         checked.append(json.loads(line)['url'])
-                        with open('/Users/emma/Work/lianjia/lianjia/result/zufangurls.json','rb') as f:
+                        with open(parent_path+'/lianjia/result/zufangurls.json','rb') as f:
                                 pages = json.load(f)
                                 for page in pages:
 					urls = page['data']
@@ -36,7 +37,7 @@ class zufangSpider(Spider):
                 else:
 			self.start_urls = ['http://bj.lianjia.com/zufang/changping/pg{page}/','http://bj.lianjia.com/zufang/dongcheng/pg{page}/','http://bj.lianjia.com/zufang/xicheng/pg{page}/','http://bj.lianjia.com/zufang/haidian/pg{page}','http://bj.lianjia.com/zufang/shijingshan/pg{page}/','http://bj.lianjia.com/zufang/daxing/pg{page}/','http://bj.lianjia.com/zufang/fangshan/pg{page}/','http://bj.lianjia.com/zufang/mentougou/pg{page}/','http://bj.lianjia.com/zufang/yanjiao/pg{page}/','http://bj.lianjia.com/zufang/shunyi/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/erp16000/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/brp0erp5700/pg{page}/','http://bj.lianjia.com/zufang/fengtai/pg{page}/','http://bj.lianjia.com/zufang/tongzhou/pg{page}/','http://bj.lianjia.com/zufang/chaoyang/brp5700erp16000/pg{page}/','http://bj.lianjia.com/zufang/yizhuangkaifaqu/pg{page}']
 			self.refer = []
-                        with open('/Users/emma/Work/lianjia/lianjia/result/url.json','rb') as f:
+                        with open(parent_path+'/lianjia/result/url.json','rb') as f:
                                 for line in f:
                                         urls = json.loads(line)['refer']
                                         self.refer.append(urls)
