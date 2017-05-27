@@ -1,125 +1,42 @@
-2017-05-26 10:04:34 [scrapy.utils.log] INFO: Scrapy 1.3.2 started (bot: lianjia)
-2017-05-26 10:04:34 [scrapy.utils.log] INFO: Overridden settings: {'NEWSPIDER_MODULE': 'lianjia.spiders', 'SPIDER_MODULES': ['lianjia.spiders'], 'RETRY_HTTP_CODES': [502, 503, 504, 400, 408], 'BOT_NAME': 'lianjia', 'DOWNLOAD_TIMEOUT': 30, 'COOKIES_ENABLED': False, 'RETRY_TIMES': 10, 'DOWNLOAD_DELAY': 3}
-2017-05-26 10:04:34 [scrapy.middleware] INFO: Enabled extensions:
-['scrapy.extensions.logstats.LogStats',
- 'scrapy.extensions.telnet.TelnetConsole',
- 'scrapy.extensions.corestats.CoreStats']
-2017-05-26 10:04:34 [scrapy.middleware] INFO: Enabled downloader middlewares:
-['lianjia.useragent.UserAgent',
- 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
- 'lianjia.HttpProxyMiddleware.HttpProxyMiddleware',
- 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
- 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
- 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
- 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
- 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
- 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
- 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
- 'scrapy.downloadermiddlewares.stats.DownloaderStats']
-2017-05-26 10:04:34 [scrapy.middleware] INFO: Enabled spider middlewares:
-['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
- 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
- 'scrapy.spidermiddlewares.referer.RefererMiddleware',
- 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
- 'scrapy.spidermiddlewares.depth.DepthMiddleware']
-2017-05-26 10:04:34 [scrapy.middleware] INFO: Enabled item pipelines:
-['lianjia.pipelines.JsonWriterPipeline']
-2017-05-26 10:04:34 [scrapy.core.engine] INFO: Spider opened
-2017-05-26 10:04:34 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
-2017-05-26 10:04:34 [scrapy.extensions.telnet] DEBUG: Telnet console listening on 127.0.0.1:6023
-2017-05-26 10:04:39 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101460037.html
-2017-05-26 10:04:39 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:39 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:39 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://43.240.138.31:8080
-2017-05-26 10:04:41 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101417578.html
-2017-05-26 10:04:41 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:41 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:41 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://183.78.183.156:82
-2017-05-26 10:04:45 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101100816190.html
-2017-05-26 10:04:45 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:45 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:45 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://218.249.154.71:8081
-2017-05-26 10:04:48 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101100973534.html
-2017-05-26 10:04:48 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:48 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:48 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://101.4.136.34:8080
-2017-05-26 10:04:49 [scrapy.crawler] INFO: Received SIGTERM, shutting down gracefully. Send again to force 
-2017-05-26 10:04:49 [scrapy.core.engine] INFO: Closing spider (shutdown)
-2017-05-26 10:04:50 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101210595.html
-2017-05-26 10:04:50 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:50 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:50 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://111.206.163.235:80
-2017-05-26 10:04:54 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101313183.html
-2017-05-26 10:04:54 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:54 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:54 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://162.105.17.69:8118
-2017-05-26 10:04:56 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101331871.html
-2017-05-26 10:04:56 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:56 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:56 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://218.249.154.66:8081
-2017-05-26 10:04:59 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101328109.html
-2017-05-26 10:04:59 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:04:59 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:04:59 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://111.13.7.42:843
-2017-05-26 10:05:03 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101542486.html
-2017-05-26 10:05:03 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:03 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:03 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://101.4.136.34:8080
-2017-05-26 10:05:07 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101553694.html
-2017-05-26 10:05:07 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:07 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:07 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://101.200.156.37:80
-2017-05-26 10:05:11 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101549774.html
-2017-05-26 10:05:11 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:11 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:11 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://124.42.7.103:80
-2017-05-26 10:05:14 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101553413.html
-2017-05-26 10:05:14 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:14 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:14 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://182.92.81.200:8080
-2017-05-26 10:05:18 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101567825.html
-2017-05-26 10:05:18 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:18 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:18 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://123.59.187.44:8118
-2017-05-26 10:05:22 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101569334.html
-2017-05-26 10:05:22 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:22 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:22 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://106.0.4.116:8081
-2017-05-26 10:05:25 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101583242.html
-2017-05-26 10:05:25 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:25 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:25 [lianjia.HttpProxyMiddleware] INFO: captcha thrashing
-2017-05-26 10:05:25 [lianjia.HttpProxyMiddleware] INFO: extending proxyes using fetch_free_proxyes.py
-2017-05-26 10:05:25 [requests.packages.urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): localhost
-2017-05-26 10:05:26 [requests.packages.urllib3.connectionpool] DEBUG: http://localhost:8123 "GET http://dev.kuaidaili.com/api/getproxy/?orderid=989526659663288&num=30&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3 HTTP/1.1" 200 186
-2017-05-26 10:05:26 [lianjia.fetch_free_proxyes] INFO: checking proxyes validation
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] INFO: new proxyes: [u'218.249.154.70:8081', u'101.200.156.37:80', u'111.206.163.235:80', u'218.249.154.71:8081', u'101.4.136.34:81', u'111.13.7.42:80', u'182.92.81.200:8080', u'180.76.154.5:8888', u'123.206.93.108:8081', u'43.240.138.31:8080', u'106.0.7.81:8081', u'223.72.128.22:8000', u'183.78.182.228:8081', u'183.78.183.156:82', u'118.89.30.210:80', u'218.249.154.69:8081', u'119.254.84.90:80', u'101.4.136.34:80', u'119.254.102.90:8080', u'59.110.154.57:80', u'101.4.136.34:8080', u'111.13.7.42:83']
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: None
-2017-05-26 10:05:42 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] DEBUG: http://localhost:8123 302 https://bj.lianjia.com/ershoufang/101101047418.html
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] INFO: trust proxy {'count': 16, 'valid': True, 'proxy': None}
-2017-05-26 10:05:42 [lianjia.HttpProxyMiddleware] INFO: now using new proxy: http://101.4.136.34:81
-2017-05-26 10:05:46 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://bj.lianjia.com/ershoufang/101101460037.html> (failed 1 times): Could not open CONNECT tunnel with proxy 43.240.138.31:8080 [{'status': 400, 'reason': 'Bad Request'}]
-2017-05-26 10:05:51 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://bj.lianjia.com/ershoufang/101101417578.html> (failed 1 times): Could not open CONNECT tunnel with proxy 183.78.183.156:82 [{'status': 400, 'reason': 'Bad Request'}]
-2017-05-26 10:05:52 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://bj.lianjia.com/ershoufang/101100816190.html> (failed 1 times): Could not open CONNECT tunnel with proxy 218.249.154.71:8081 [{'status': 400, 'reason': 'Bad Request'}]
-2017-05-26 10:05:56 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://bj.lianjia.com/ershoufang/101100973534.html> (failed 1 times): Could not open CONNECT tunnel with proxy 101.4.136.34:8080 [{'status': 400, 'reason': 'Bad Request'}]
-2017-05-26 10:05:56 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
-{'downloader/exception_count': 4,
- 'downloader/exception_type_count/scrapy.core.downloader.handlers.http11.TunnelError': 4,
- 'downloader/request_bytes': 4100,
- 'downloader/request_count': 20,
- 'downloader/request_method_count/GET': 20,
- 'downloader/response_bytes': 10776,
- 'downloader/response_count': 16,
- 'downloader/response_status_count/302': 16,
- 'finish_reason': 'shutdown',
- 'finish_time': datetime.datetime(2017, 5, 26, 2, 5, 56, 990650),
- 'log_count/DEBUG': 23,
- 'log_count/INFO': 61,
- 'scheduler/dequeued': 20,
- 'scheduler/dequeued/memory': 20,
- 'scheduler/enqueued': 36,
- 'scheduler/enqueued/memory': 36,
- 'start_time': datetime.datetime(2017, 5, 26, 2, 4, 34, 726414)}
-2017-05-26 10:05:56 [scrapy.core.engine] INFO: Spider closed (shutdown)
+2017-05-27 10:10:59 [scrapy] INFO: Scrapy 1.0.3 started (bot: lianjia)
+2017-05-27 10:10:59 [scrapy] INFO: Optional features available: ssl, http11, boto
+2017-05-27 10:10:59 [scrapy] INFO: Overridden settings: {'NEWSPIDER_MODULE': 'lianjia.spiders', 'SPIDER_MODULES': ['lianjia.spiders'], 'RETRY_HTTP_CODES': [502, 503, 504, 400, 408], 'BOT_NAME': 'lianjia', 'DOWNLOAD_TIMEOUT': 30, 'COOKIES_ENABLED': False, 'RETRY_TIMES': 10, 'DOWNLOAD_DELAY': 3}
+2017-05-27 10:10:59 [scrapy] INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+2017-05-27 10:10:59 [boto] DEBUG: Retrieving credentials from metadata server.
+2017-05-27 10:11:00 [boto] ERROR: Caught exception reading instance data
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/boto/utils.py", line 210, in retry_url
+    r = opener.open(req, timeout=timeout)
+  File "/usr/lib/python2.7/urllib2.py", line 429, in open
+    response = self._open(req, data)
+  File "/usr/lib/python2.7/urllib2.py", line 447, in _open
+    '_open', req)
+  File "/usr/lib/python2.7/urllib2.py", line 407, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 1228, in http_open
+    return self.do_open(httplib.HTTPConnection, req)
+  File "/usr/lib/python2.7/urllib2.py", line 1198, in do_open
+    raise URLError(err)
+URLError: <urlopen error timed out>
+2017-05-27 10:11:00 [boto] ERROR: Unable to read instance data, giving up
+2017-05-27 10:11:00 [scrapy] INFO: Enabled downloader middlewares: UserAgent, HttpAuthMiddleware, HttpProxyMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, MetaRefreshMiddleware, HttpCompressionMiddleware, RedirectMiddleware, ChunkedTransferMiddleware, DownloaderStats
+2017-05-27 10:11:00 [scrapy] INFO: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+2017-05-27 10:11:00 [scrapy] INFO: Enabled item pipelines: JsonWriterPipeline
+2017-05-27 10:11:00 [scrapy] INFO: Spider opened
+2017-05-27 10:11:00 [scrapy] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2017-05-27 10:11:00 [scrapy] DEBUG: Telnet console listening on 127.0.0.1:6023
+2017-05-27 10:11:05 [lianjia.HttpProxyMiddleware] DEBUG: None 302 https://bj.lianjia.com/ershoufang/101101460037.html
+2017-05-27 10:11:05 [lianjia.HttpProxyMiddleware] INFO: response status not in spider.website_possible_httpstatus_list
+2017-05-27 10:11:05 [lianjia.HttpProxyMiddleware] INFO: invalidate {'count': 16, 'valid': True, 'proxy': None}
+2017-05-27 10:11:05 [lianjia.HttpProxyMiddleware] INFO: captcha thrashing
+2017-05-27 10:11:05 [lianjia.HttpProxyMiddleware] INFO: extending proxyes using fetch_free_proxyes.py
+2017-05-27 10:11:05 [requests.packages.urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): dev.kuaidaili.com
+2017-05-27 10:11:07 [requests.packages.urllib3.connectionpool] DEBUG: http://dev.kuaidaili.com:80 "GET /api/getproxy/?orderid=989526659663288&num=15&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3 HTTP/1.1" 200 149
+2017-05-27 10:11:07 [lianjia.fetch_free_proxyes] INFO: checking proxyes validation
+2017-05-27 10:12:20 [lianjia.HttpProxyMiddleware] INFO: new proxyes: [u'223.72.128.22:8000']
+2017-05-27 10:12:20 [lianjia.HttpProxyMiddleware] INFO: reset proxyes to valid
+2017-05-27 10:12:20 [lianjia.HttpProxyMiddleware] INFO: valid proxy < threshold: 1/2
+2017-05-27 10:12:20 [lianjia.HttpProxyMiddleware] INFO: extending proxyes using fetch_free_proxyes.py
+2017-05-27 10:12:20 [requests.packages.urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): dev.kuaidaili.com
+2017-05-27 10:12:22 [requests.packages.urllib3.connectionpool] DEBUG: http://dev.kuaidaili.com:80 "GET /api/getproxy/?orderid=989526659663288&num=15&area=%E5%8C%97%E4%BA%AC&b_pcchrome=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3 HTTP/1.1" 200 148
+2017-05-27 10:12:22 [lianjia.fetch_free_proxyes] INFO: checking proxyes validation
