@@ -31,7 +31,7 @@ class HttpProxyMiddleware(object):
         # 当有效代理小于这个数时(包括直连), 从网上抓取新的代理, 可以将这个数设为为了满足每个ip被要求输入验证码后得到足够休息时间所需要的代理数
         # 例如爬虫在十个可用代理之间切换时, 每个ip经过数分钟才再一次轮到自己, 这样就能get一些请求而不用输入验证码.
         # 如果这个数过小, 例如两个, 爬虫用A ip爬了没几个就被ban, 换了一个又爬了没几次就被ban, 这样整个爬虫就会处于一种忙等待的状态, 影响效率
-        self.extend_proxy_threshold = 3
+        self.extend_proxy_threshold = 10
         # 初始化代理列表
         self.proxyes = [{"proxy": None, "valid": True, "count": 0}]
         # 初始时使用0号代理(即无代理)
@@ -107,6 +107,12 @@ class HttpProxyMiddleware(object):
                 count += 1
         return count
 
+    def choose_valid_proxy(self):
+	while True:
+		self.proxy_index = random.choice(xrange(1,len(self.proxyes)))
+		if self.proxyes[self.proxy_index]["valid"]:
+        	        break
+	
     def inc_proxy_index(self):
         """
         将代理列表的索引移到下一个有效代理的位置
@@ -133,15 +139,11 @@ class HttpProxyMiddleware(object):
             self.fetch_new_proxyes()
 
         #assert self.proxyes[0]["valid"]
-        while True:
-	    if len(self.len_valid_proxy)>1:
-	            self.proxy_index = random.choice(xrange(1,len(self.proxyes)))#(self.proxy_index + 1) % len(self.proxyes)
-	    else:
-	            logger.info("None proxy!")
-		    self.proxy_index = 0
-	            break
-            if self.proxyes[self.proxy_index]["valid"]:
-                break
+	if self.len_valid_proxy()>1:
+		self.choose_valid_proxy()
+	else:
+		logger.info("None proxy!%d" % self.len_valid_proxy())
+		self.proxy_index = 0
 
         logger.info("now using new proxy: %s" % self.proxyes[self.proxy_index]["proxy"])
 
@@ -198,8 +200,7 @@ class HttpProxyMiddleware(object):
                     fd.write(p["proxy"][7:]+"\n") # 只保存有效的代理
     def process_request(self, request, spider):
         # spider发现parse error, 要求更换代理
-	baned = re.search('captcha',request.url)
-        if baned or ("change_proxy" in request.meta.keys() and request.meta["change_proxy"]):
+        if "change_proxy" in request.meta.keys() and request.meta["change_proxy"]:
             logger.info("change proxy request get by spider: %s"  % request)
             self.invalid_proxy(request.meta["proxy_index"])
             request.meta["change_proxy"] = False
@@ -227,10 +228,9 @@ class HttpProxyMiddleware(object):
 
         # status不是正常的200而且不在spider声明的正常爬取过程中可能出现的
         # status列表中, 则认为代理无效, 切换代理
-	baned = re.search('captcha',response.url)
-        if baned or (response.status != 200 \
+        if response.status != 200 \
                 and (not hasattr(spider, "website_possible_httpstatus_list") \
-                             or response.status not in spider.website_possible_httpstatus_list)):
+                             or response.status not in spider.website_possible_httpstatus_list):
             logger.info("response status not in spider.website_possible_httpstatus_list")
             self.invalid_proxy(request.meta["proxy_index"])
             new_request = request.copy()
