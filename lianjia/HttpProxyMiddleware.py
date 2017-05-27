@@ -198,6 +198,7 @@ class HttpProxyMiddleware(object):
                 p = self.proxyes[i]
                 if p["valid"] or p["count"] >= self.dump_count_threshold:
                     fd.write(p["proxy"][7:]+"\n") # 只保存有效的代理
+
     def process_request(self, request, spider):
         # spider发现parse error, 要求更换代理
         if "change_proxy" in request.meta.keys() and request.meta["change_proxy"]:
@@ -213,7 +214,7 @@ class HttpProxyMiddleware(object):
             self.last_no_proxy_time = datetime.now()
             self.proxy_index = 0
 
-        request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址
+        #request.meta["dont_redirect"] = True  # 有些代理会把请求重定向到一个莫名其妙的地址
 	
         self.set_proxy(request)
 

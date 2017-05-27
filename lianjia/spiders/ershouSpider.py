@@ -35,13 +35,13 @@ class ershouSpider(Spider):
 						if id not in checked:
 							url = url.replace('http','https')
 							yield Request(url=url, callback=self.parse_details)
-							checked.append(url)
+							checked.append(id)
 							#self.items+=1
 							#if self.items>30:
 							#	time.sleep(5*60)
 							#	self.items=0
-						#else:
-						#	print id +' already checked'
+						else:
+							print id +' already checked'
 		else:
 			self.start_urls = ['http://bj.lianjia.com/ershoufang/changping/pg{page}/','http://bj.lianjia.com/ershoufang/dongcheng/pg{page}/','http://bj.lianjia.com/ershoufang/xicheng/pg{page}/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a6a7a8/','http://bj.lianjia.com/ershoufang/shijingshan/pg{page}/','http://bj.lianjia.com/ershoufang/daxing/pg{page}/','http://bj.lianjia.com/ershoufang/fangshan/pg{page}/','http://bj.lianjia.com/ershoufang/mentougou/pg{page}/','http://bj.lianjia.com/ershoufang/pinggu/pg{page}/','http://bj.lianjia.com/ershoufang/miyun/pg{page}/','http://bj.lianjia.com/ershoufang/yanqing/pg{page}/','http://bj.lianjia.com/ershoufang/shunyi/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a1a2/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a5a6a7a8/','http://bj.lianjia.com/ershoufang/fengtai/pg{page}/','http://bj.lianjia.com/ershoufang/tongzhou/pg{page}/','http://bj.lianjia.com/ershoufang/chaoyang/pg{page}a3a4/','http://bj.lianjia.com/ershoufang/haidian/pg{page}a1a2a3a4a5/','http://bj.lianjia.com/ershoufang/yanjiao/pg{page}/','http://bj.lianjia.com/ershoufang/yizhuangkaifaqu/pg{page}']#'http://bj.lianjia.com/ershoufang/huairou/pg{page}'
 			self.refer = []
@@ -110,7 +110,7 @@ class ershouSpider(Spider):
                 if baned:
                         response.request.meta["change_proxy"]=True
                         #yield Request(url=,callback=self.parse)
-			return
+			yield response.request
                         pass
 		time.sleep(3)
 		regex = '''resblockPosition(.+)'''

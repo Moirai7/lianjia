@@ -180,7 +180,8 @@ def check(proxy):
     opener = urllib2.build_opener(proxy_handler,urllib2.HTTPHandler)
     try:
         response = opener.open(url,timeout=3)
-        return response.code == 200
+	print response.geturl()
+        return response.code == 200 and response.geturl().find('cap')==-1
     except Exception:
         return False
 
