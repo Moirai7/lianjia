@@ -23,15 +23,18 @@ class zufangSpider(Spider):
                         checked = []
                         with open(parent_path+'/lianjia/result/zufang.json','rb') as f:
                                 for line in f:
-                                        checked.append(json.loads(line)['url'])
+					url = json.loads(line)['url']
+                                        url = filter(lambda ch: ch in '0123456789',url)
+                                        checked.append(url)
                         with open(parent_path+'/lianjia/result/zufangurls.json','rb') as f:
                                 pages = json.load(f)
                                 for page in pages:
 					urls = page['data']
 					for url in urls:
-                                                if url not in checked:
+						id = filter(lambda ch: ch in '0123456789',url)
+                                                if id not in checked:
                                                         yield Request(url=url, callback=self.parse_details)
-							checked.append(url)
+							checked.append(id)
 						else:
 							print url +' already checked'
                 else:
@@ -82,6 +85,7 @@ class zufangSpider(Spider):
 		baned = re.search('captcha',response.url)
                 if baned:
                         response.request.meta["change_proxy"]=True
+			yield response.request
                         #yield Request(url=,callback=self.parse)
                         pass
                 time.sleep(3)
