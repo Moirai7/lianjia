@@ -33,6 +33,7 @@ class zufangSpider(Spider):
 					for url in urls:
 						id = filter(lambda ch: ch in '0123456789',url)
                                                 if id not in checked:
+							url = url.replace('http','https')
                                                         yield Request(url=url, callback=self.parse_details)
 							checked.append(id)
 						else:
